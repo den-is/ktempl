@@ -14,15 +14,20 @@ Optionally, after successful render, ktemp might execute command provided by use
 
 Initial motivation was to write piece of software which can be used as a glue between not flexible services, without built-in service discovery capabilities, and Kubernetes.
 One such example is the Varnish HTTP accelerator, where you need to pass backend servers configuration, and reload Varnish daemon if configuration changes.
-Inspired by [consul-template][consultemplate] and many other common configuration management frameworks which opearate templates to generate configs, i.e. [Helm][helm] [Ansible][ansibletemplate], [Puppet][puppettemplate], etc.
+
+Inspired by many configuration management frameworks which operate templates to generate configs, e.g., [Helm][helm], [consul-template][consultemplate], [Ansible][ansibletemplate], [Puppet][puppettemplate], etc.
 
 ## Prerequisites
 
 You should have a `kubeconfig` file with proper authentication and context details supplied.
-More details on how to obtain that file can be found [here][kubeconfigdoc].
-User listed in the `kubeconfig` should be allowed to at least list and read nodes or pods.
-But better allow that user to list both: nodes and pods.
+
+User listed in the `kubeconfig` should be allowed to list nodes and pods.
+
+As a minimum user should be allowed to list either nodes or pods.
+
 Default kubeconfig location `~/.kube/config`
+
+More details on how to obtain that file can be found [here][kubeconfigdoc].
 
 ## Template scope variables
 
@@ -67,7 +72,7 @@ The default is `config.yaml` in the same directory as binary.
 Or `/etc/ktempl/config.yaml`.
 Or whatever you supply with `-c` command-line option.
 
-### List of available configuration operations
+### List of available configuration options
 
 | Config file   | CLI                     | Description                                                              |
 | ------------- | ----------------------- | ------------------------------------------------------------------------ |
@@ -77,22 +82,16 @@ Or whatever you supply with `-c` command-line option.
 | selector      | -l, --selector string   | Kubernetes [label selectors][labelselectors] string                      |
 | template      | -t, --template string   | Path to template                                                         |
 | output        | -o, --output string     | Path where to put rendered results. default stdout                       |
-| set           | --set string            | Additional key=values passed to template rendering engine                |
 | permissions   | N/A                     | Output file permissions. default 0644. should be in 4 digit format!      |
+| set           | --set string            | Additional key=values passed to template rendering engine                |
 | exec          | -e, --exec string       | Command to execute after successful template render                      |
 | log.file      | --log-file string       | Path to log file                                                         |
-| log.log-level | --log-file string       | Minimum log message level to log                                         |
+| log.log-level | --log-file string       | Minimum log message level to log. Default `info`. Available levels by hierarchy: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic` |
 | N/A           | -c, --config string     | Path to ktempl config file                                               |
 | daemon        | -d, --daemon            | Run ktempl in service mode, rather than singleshot                       |
 | interval      | -i, --interval string   | Interval between polls. default 15s. Valid time units are "s", "m", "h". |
 | retries       | N/A                     | _not-yet-implemented_ Number of retries to fetch data from Kubernetes    |
-| timeout       | N/A                     | _not-yet-implemented_ ktemp operations timeout                           |
-
-### Logging
-
-Available log levels: `"trace"`, `"debug"`, `"info"`, `"warn"`, `"error"`, `"fatal"`, `"panic`
-
-Default log level: `"info"`
+| timeout       | N/A                     | _not-yet-implemented_ ktempl operations timeout                           |
 
 [gotemplate]: https://golang.org/pkg/text/template/
 [consultemplate]: https://github.com/hashicorp/consul-template
