@@ -74,24 +74,24 @@ Or whatever you supply with `-c` command-line option.
 
 ### List of available configuration options
 
-| Config file   | CLI                     | Description                                                              |
-| ------------- | ----------------------- | ------------------------------------------------------------------------ |
-| kubeconfig    | -k, --kubeconfig string | Path to kubeconfig                                                       |
-| pods          | -p, --pods              | Query pods and get nodes they are running on                             |
-| namespace     | -n, --namespace string  | Kubernetes namespace where to look Pods for. Used with `-p`              |
-| selector      | -l, --selector string   | Kubernetes [label selectors][labelselectors] string                      |
-| template      | -t, --template string   | Path to template                                                         |
-| output        | -o, --output string     | Path where to put rendered results. default stdout                       |
-| permissions   | N/A                     | Output file permissions. default 0644. should be in 4 digit format!      |
-| set           | --set string            | Additional key=values passed to template rendering engine                |
-| exec          | -e, --exec string       | Command to execute after successful template render                      |
-| log.file      | --log-file string       | Path to log file                                                         |
-| log.log-level | --log-file string       | Minimum log message level to log. Default `info`. Available levels by hierarchy: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic` |
-| N/A           | -c, --config string     | Path to ktempl config file                                               |
-| daemon        | -d, --daemon            | Run ktempl in service mode, rather than singleshot                       |
-| interval      | -i, --interval string   | Interval between polls. default 15s. Valid time units are "s", "m", "h". |
-| retries       | N/A                     | _not-yet-implemented_ Number of retries to fetch data from Kubernetes    |
-| timeout       | N/A                     | _not-yet-implemented_ ktempl operations timeout                           |
+| Config file     | CLI                | Description                                                              |
+| --------------- | ------------------ | ------------------------------------------------------------------------ |
+| `kubeconfig`    | `-k, --kubeconfig` | Path to kubeconfig                                                       |
+| `pods`          | `-p, --pods`       | Query pods and get nodes they are running on                             |
+| `namespace`     | `-n, --namespace`  | Kubernetes namespace where to look Pods for. Used with `-p`              |
+| `selector`      | `-l, --selector`   | Kubernetes [label selectors][labelselectors] string                      |
+| `template`      | `-t, --template`   | Path to template                                                         |
+| `output`        | `-o, --output`     | Path where to put rendered results. default stdout                       |
+| `permissions`   | `N/A`              | Output file permissions. default 0644. should be in 4 digit format!      |
+| `set`           | `--set`            | Additional key=values passed to template rendering engine                |
+| `exec`          | `-e, --exec`       | Command to execute after successful template render                      |
+| `log.file`      | `--log-file`       | Path to log file                                                         |
+| `log.log-level` | `--log-file`       | Minimum log message level to log. Default `info`. Available levels by hierarchy: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic` |
+| `N/A`           | `-c, --config`     | Path to ktempl config file                                               |
+| `daemon`        | `-d, --daemon`     | Run ktempl in service mode, rather than singleshot                       |
+| `interval`      | `-i, --interval`   | Interval between polls. default 15s. Valid time units are "s", "m", "h". |
+| `retries`       | `N/A`              | _NOT YET IMPLEMENTED_ Number of retries to fetch data from Kubernetes    |
+| `timeout`       | `N/A`              | _NOT YET IMPLEMENTED_ ktempl operations timeout                          |
 
 [gotemplate]: https://golang.org/pkg/text/template/
 [consultemplate]: https://github.com/hashicorp/consul-template
