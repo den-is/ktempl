@@ -8,6 +8,7 @@ import (
 	"github.com/den-is/ktempl/pkg/exec"
 	"github.com/den-is/ktempl/pkg/kubernetes"
 	"github.com/den-is/ktempl/pkg/logging"
+	"github.com/den-is/ktempl/pkg/render"
 	"github.com/den-is/ktempl/pkg/validation"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -23,11 +24,11 @@ func StartJob(cmd *cobra.Command, args []string) {
 	output := viper.GetString("output")
 	use_pods := viper.GetBool("pods")
 
-	template_data := TplData{}
+	template_data := render.TplData{}
 
 	// TODO: accept complex values for the right side of the key=value expression, rather than just string values
 	// parse user provided values into map
-	user_values := StringSliceToStringMap(viper.GetStringSlice("set"))
+	user_values := render.StringSliceToStringMap(viper.GetStringSlice("set"))
 	template_data.Values = &user_values
 
 	// TODO: add central place for validation logic
@@ -56,7 +57,7 @@ func StartJob(cmd *cobra.Command, args []string) {
 
 		template_data.Nodes = nodes
 
-		if err := RenderOutput(template, &template_data, output); err == nil {
+		if err := render.RenderOutput(template, &template_data, output); err == nil {
 			fmt.Println("Going to execute command")
 			if viper.GetString("exec") != "" {
 				exec.ExecCommand(viper.GetString("exec"))
