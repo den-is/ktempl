@@ -46,5 +46,6 @@ sub vcl_recv {
 ```
 
 ```sh
+# selects nodes using app=stagingapps label
 ktempl -l app=stagingapps -t varnish.tpl  -o backend.conf --set port=32456 --exec="systemctl reload varnishd"
 ```
