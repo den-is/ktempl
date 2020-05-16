@@ -20,7 +20,7 @@ User included in kubeconfig should be allowed to at least list nodes in the clus
 # Select nodes with "disk=ssd" label selector
 ktempl -l disk=ssd
 
-# Selects nodes on which pods with labels "app=myapp1" are running
+# Selects nodes on which pods with label "app=myapp1" are running
 ktempl -p -l app=myapp1 -t myconf_template.tpl -o myconf.yaml
 
 ktempl -c config.yaml -t test.tpl  -o output.txt -l app=stagingapps --set title=XXX --log-level warn
