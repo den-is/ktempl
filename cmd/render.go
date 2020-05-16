@@ -12,6 +12,7 @@ import (
 
 	"github.com/den-is/ktempl/pkg/kubernetes"
 	"github.com/den-is/ktempl/pkg/logging"
+	"github.com/den-is/ktempl/pkg/validation"
 	"github.com/spf13/viper"
 )
 
@@ -29,7 +30,7 @@ func StringSliceToStringMap(s []string) map[string]string {
 		for _, v := range viper.GetStringSlice("set") {
 			kv_s := strings.SplitN(v, "=", 2)
 			if len(kv_s) <= 1 {
-				// TODO: Validate. do that validation using separate fucntion, during early app initialization stages
+				// TODO: Validate. do that validation using separate function, during early stages of the app initialization
 				logging.LogWithFields(
 					logging.Fields{
 						"component": "render",
@@ -64,7 +65,7 @@ func RenderOutput(tpl_path string, nodedata *TplData, output_dst string) error {
 	// by default write to stdout
 	var out_f = os.Stdout
 
-	if err := CheckFileExists(output_dst); err != nil && output_dst != "" {
+	if err := validation.CheckFileExists(output_dst); err != nil && output_dst != "" {
 		// if file not exits and not stdout -> create file
 
 		out_f, err = os.Create(output_dst)

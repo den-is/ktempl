@@ -8,6 +8,7 @@ import (
 	"github.com/den-is/ktempl/pkg/exec"
 	"github.com/den-is/ktempl/pkg/kubernetes"
 	"github.com/den-is/ktempl/pkg/logging"
+	"github.com/den-is/ktempl/pkg/validation"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -32,7 +33,7 @@ func StartJob(cmd *cobra.Command, args []string) {
 	// TODO: add central place for validation logic
 
 	// Check if template file exists
-	if err := CheckFileExists(template); err != nil {
+	if err := validation.CheckFileExists(template); err != nil {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "runner",
