@@ -1,0 +1,5 @@
+interval: 30s
+permissions: 0640
+
+log:
+  file: ktempl.log
