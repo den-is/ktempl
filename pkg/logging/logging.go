@@ -43,7 +43,7 @@ func LoggerSetup(config *LoggingConfig) {
 func ParseUserLvl(level string) logrus.Level {
 	logrus_lvl, err := logrus.ParseLevel(level)
 	if err != nil {
-		logger.Log(logrus.WarnLevel, fmt.Sprintf("Was not able to parse user provided log level %q. Will Use error", level))
+		logger.Log(logrus.WarnLevel, fmt.Sprintf("Was not able to parse user provided log level %q. Will use %q.", level, "error"))
 		return logrus.ErrorLevel
 	}
 	return logrus_lvl
