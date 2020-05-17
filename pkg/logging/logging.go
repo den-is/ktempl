@@ -47,7 +47,7 @@ func LogWithFields(fields Fields, level string, args ...interface{}) {
 	entry := logger.WithFields(logrus_fields)
 	logrus_lvl, err := logrus.ParseLevel(level)
 	if err != nil {
-		fmt.Println("FATAL:", err)
+		logger.Log(logrus.FatalLevel, fmt.Sprintf("Was not able to parse user provided log level %q", level))
 	}
 	entry.Log(logrus_lvl, args...)
 
@@ -57,7 +57,7 @@ func Log(level string, args ...interface{}) {
 
 	logrus_lvl, err := logrus.ParseLevel(level)
 	if err != nil {
-		fmt.Println("FATAL:", err)
+		logger.Log(logrus.FatalLevel, fmt.Sprintf("Was not able to parse user provided log level %q", level))
 	}
 	logger.Log(logrus_lvl, args...)
 }
