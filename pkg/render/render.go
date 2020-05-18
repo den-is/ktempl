@@ -15,13 +15,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-type TplData struct {
+type TemplData struct {
 	Nodes  *[]kubernetes.Node
 	Values *map[string]string
 }
 
 // Receives path to a template, Node data and writes rendered file to output destination path
-func RenderOutput(tpl_path string, nodedata *TplData, output_dst string) error {
+func RenderOutput(tpl_path string, nodedata *TemplData, output_dst string) error {
 
 	// prepare template and rendered data
 	tpl_name := path.Base(tpl_path)
@@ -37,13 +37,15 @@ func RenderOutput(tpl_path string, nodedata *TplData, output_dst string) error {
 
 	f_perms_val := viper.GetUint32("permissions")
 
-	// by default write to stdout
-	var out_f = os.Stdout
+	if output_dst == "" {
+		// write to stdout if output file path not provided
+		fmt.Fprint(os.Stdout, rendered_tpl_bf.String())
+		return nil
 
-	if err := validation.CheckFileExists(output_dst); err != nil && output_dst != "" {
-		// if file not exits and not stdout -> create file
+	} else if err := validation.CheckFileExists(output_dst); err != nil && output_dst != "" {
+		// if file not exists and not stdout -> create file
 
-		out_f, err = os.Create(output_dst)
+		out_f, err := os.Create(output_dst)
 		if err == nil {
 
 			// change permissions of a new file
@@ -123,10 +125,8 @@ func RenderOutput(tpl_path string, nodedata *TplData, output_dst string) error {
 				}, "info", "Contents did not change")
 			return errors.New("Contents did not change")
 		}
-	} else {
-		// write to stdout, as a last resort
-		fmt.Fprint(os.Stdout, rendered_tpl_bf.String())
-		return nil
 	}
+
+	return nil
 
 }

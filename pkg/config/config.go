@@ -62,7 +62,7 @@ func Init() {
 
 	logging.LoggerSetup(&CurrentConfig.Log)
 	logging.LogWithFields(logging.Fields{
-		"topic": "configurator",
+		"component": "config",
 	}, "info", "Successfully initialized configuration")
 
 }

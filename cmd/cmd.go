@@ -28,7 +28,7 @@ ktempl -c config.yaml -t test.tpl  -o output.txt -l app=stagingapps --set title=
 		Run: func(cmd *cobra.Command, args []string) {
 			// delegate primary job execution control to dedicated function.
 			// passing all arguments and command object.
-			StartJob(cmd, args)
+			Gates(cmd, args)
 		},
 	}
 )
