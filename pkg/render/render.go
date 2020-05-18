@@ -25,14 +25,20 @@ func RenderOutput(tpl_path string, nodedata *TemplData, output_dst string) error
 
 	// prepare template and rendered data
 	tpl_name := path.Base(tpl_path)
-	t := template.Must(template.New(tpl_name).ParseFiles(tpl_path))
-	rendered_tpl_bf := new(bytes.Buffer)
-	if err := t.Execute(rendered_tpl_bf, *nodedata); err != nil {
+	t, templ_init_err := template.New(tpl_name).Option("missingkey=error").ParseFiles(tpl_path)
+	if templ_init_err != nil {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "render",
-			}, "error", "Error in template rendering:", err)
-		return err
+			}, "error", templ_init_err)
+	}
+	rendered_tpl_bf := new(bytes.Buffer)
+	if templ_exec_err := t.Execute(rendered_tpl_bf, *nodedata); templ_exec_err != nil {
+		logging.LogWithFields(
+			logging.Fields{
+				"component": "render",
+			}, "error", templ_exec_err)
+		return templ_exec_err
 	}
 
 	f_perms_val := viper.GetUint32("permissions")
