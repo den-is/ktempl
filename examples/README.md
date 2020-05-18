@@ -1,6 +1,7 @@
 # ktempl examples
 
-Example configuration [file](./config.yaml)
+## Example config
+
 ```yaml
 interval: 30s
 permissions: 0640
@@ -14,9 +15,9 @@ values:
 
 ```
 
-Couple template examples:
+## Couple template examples
 
-## Simple example
+### Simple example
 
 Create template file for example `example.tpl`, with such [contents](./example.tpl):
 
@@ -34,7 +35,7 @@ Execute ktempl:
 ktempl -p -l app=myapp1 -t example.tpl --set title=Hello,port=32456
 ```
 
-## Varnish
+### Varnish
 
 Create template `varnish.tpl` with contents listed in varnish example [template](./varnish.tpl):
 
