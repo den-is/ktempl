@@ -75,7 +75,7 @@ func init() {
 	_ = viper.BindPFlag("exec", rootCmd.PersistentFlags().Lookup("exec"))
 	_ = viper.BindPFlag("log.file", rootCmd.PersistentFlags().Lookup("log-file"))
 	_ = viper.BindPFlag("log.level", rootCmd.PersistentFlags().Lookup("log-level"))
-	_ = viper.BindPFlag("set", rootCmd.PersistentFlags().Lookup("set"))
+	_ = viper.BindPFlag("values", rootCmd.PersistentFlags().Lookup("set"))
 	_ = viper.BindPFlag("pods", rootCmd.PersistentFlags().Lookup("pods"))
 	_ = viper.BindPFlag("daemon", rootCmd.PersistentFlags().Lookup("daemon"))
 

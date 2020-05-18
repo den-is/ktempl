@@ -19,7 +19,7 @@ type Config struct {
 	Permissions uint32
 	Interval    string
 	Exec        string
-	Set         []string
+	Values      []string
 	Daemon      bool
 	Pods        bool
 	Log         logging.LoggingConfig

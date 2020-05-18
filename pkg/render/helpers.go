@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/den-is/ktempl/pkg/logging"
-	"github.com/spf13/viper"
 )
 
 // Converts slice of strings of form "key=value" into map[key]value
@@ -14,7 +13,7 @@ func StringSliceToStringMap(s []string) map[string]string {
 	result := make(map[string]string)
 
 	if len(s) > 0 {
-		for _, v := range viper.GetStringSlice("set") {
+		for _, v := range s {
 			kv_s := strings.SplitN(v, "=", 2)
 			if len(kv_s) <= 1 {
 				// TODO: Validate. do that validation using separate function, during early stages of the app initialization
