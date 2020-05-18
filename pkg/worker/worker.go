@@ -51,15 +51,9 @@ func Worker() {
 
 		// check if ktempl runs as a service or just once
 		if viper.GetBool("daemon") {
-			if interval_duration, err := time.ParseDuration(viper.GetString("interval")); err == nil {
-				time.Sleep(interval_duration)
-			} else {
-				logging.LogWithFields(
-					logging.Fields{
-						"component": "runner",
-					}, "error", "Was not able to parse user provided duration ", viper.GetString("interval"))
-				os.Exit(1)
-			}
+
+			time.Sleep(viper.GetDuration("interval"))
+
 		} else {
 			os.Exit(0)
 		}

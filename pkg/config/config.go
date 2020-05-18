@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/den-is/ktempl/pkg/logging"
 	"github.com/spf13/viper"
@@ -17,7 +18,7 @@ type Config struct {
 	Template    string
 	Output      string
 	Permissions uint32
-	Interval    string
+	Interval    time.Duration
 	Exec        string
 	Values      map[string]string
 	Daemon      bool

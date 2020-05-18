@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/den-is/ktempl/pkg/config"
 
@@ -49,12 +50,14 @@ func init() {
 	// initializing viper
 	cobra.OnInitialize(config.Init)
 
+	default_duration, _ := time.ParseDuration("15s")
+
 	rootCmd.PersistentFlags().StringP("kubeconfig", "k", "", "path to kubeconfig (default is \"~/.kube/config\")")
 	rootCmd.PersistentFlags().StringP("namespace", "n", "", "used with -p. kubernetes namespace indicator (default is \"\" or what is provided in kubeconfig. usually \"default\")")
 	rootCmd.PersistentFlags().StringP("selector", "l", "", "kubernetes label selectors (default is \"\" a.k.a everything)")
 	rootCmd.PersistentFlags().StringP("template", "t", "", "input template file. Required")
 	rootCmd.PersistentFlags().StringP("output", "o", "", "output file path (default stdout)")
-	rootCmd.PersistentFlags().StringP("interval", "i", "15s", "used with -d. interval between polls (default 15s)")
+	rootCmd.PersistentFlags().DurationP("interval", "i", default_duration, "used with -d. interval between polls (default 15s)")
 	rootCmd.PersistentFlags().StringP("config", "c", "", "config file location. Optional.")
 	rootCmd.PersistentFlags().StringP("exec", "e", "", "execute command on success. Optional")
 	rootCmd.PersistentFlags().String("log-file", "", "log file destination. default stdout. Optional")
