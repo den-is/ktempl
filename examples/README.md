@@ -1,6 +1,18 @@
 # ktempl examples
 
 Example configuration [file](./config.yaml)
+```yaml
+interval: 30s
+permissions: 0640
+
+log:
+  file: ktempl.log
+
+values:
+  title: Example
+  port: 32835
+
+```
 
 Couple template examples:
 
@@ -11,7 +23,7 @@ Create template file for example `example.tpl`, with such [contents](./example.t
 ```txt
 # >>>> start of the template {{ .Values.title }} <<<<
 {{- range $i, $n := .Nodes }}
-Node {{$n.Name }} has {{ $n.InternalIP }} IP
+Node {{$n.Name }} has {{ $n.InternalIP }} IP and port {{ $.Values.port }}
 {{- end }}
 ```
 
@@ -19,7 +31,7 @@ Execute ktempl:
 
 ```sh
 # selects pods by app=myapp1 and get's nodes they are running on. outputs to stdout.
-ktempl -p -l app=myapp1 -t example.tpl --set title=Hello
+ktempl -p -l app=myapp1 -t example.tpl --set title=Hello,port=32456
 ```
 
 ## Varnish

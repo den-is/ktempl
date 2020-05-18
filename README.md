@@ -34,7 +34,7 @@ More details on how to obtain that file can be found [here][kubeconfigdoc].
 Two variables passed to template for rendering:
 
 - `.Nodes` - list of nodes returned by Kubernetes
-- `.Values` - dictionary of key=values passed to ktempl using `--set`
+- `.Values` - dictionary of key=values passed to ktempl using `--set` or `values:` in config file.
 
 Each node in `.Nodes` has next fields
 
