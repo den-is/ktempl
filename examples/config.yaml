@@ -5,5 +5,5 @@ log:
   file: ktempl.log
 
 values:
-- title=Example
-- port=32835
+  title: Example
+  port: 32835

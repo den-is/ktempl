@@ -24,8 +24,7 @@ func Worker() {
 	template := viper.GetString("template")
 
 	// TODO: accept complex values for the right side of the key=value expression, rather than just string values
-	// parse user provided values into map
-	user_values := render.StringSliceToStringMap(viper.GetStringSlice("values"))
+	user_values := viper.GetStringMapString("values")
 	template_data.Values = &user_values
 
 	for {

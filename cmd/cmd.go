@@ -59,7 +59,7 @@ func init() {
 	rootCmd.PersistentFlags().StringP("exec", "e", "", "execute command on success. Optional")
 	rootCmd.PersistentFlags().String("log-file", "", "log file destination. default stdout. Optional")
 	rootCmd.PersistentFlags().String("log-level", "", "log file destination. default stdout. Optional")
-	rootCmd.PersistentFlags().StringSlice("set", []string{}, "provide additional template values of form stringKey=StringValue (can be multiple comma separated values key1=val1,key2=val2)")
+	rootCmd.PersistentFlags().StringToString("set", nil, "provide additional template values of form stringKey=StringValue (can be multiple comma separated values key1=val1,key2=val2)")
 	rootCmd.PersistentFlags().BoolP("pods", "p", false, "query pods for their nodes")
 	rootCmd.PersistentFlags().BoolP("daemon", "d", false, "run as daemon")
 
