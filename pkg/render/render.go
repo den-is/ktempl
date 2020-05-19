@@ -9,6 +9,7 @@ import (
 	"path"
 	"text/template"
 
+	"github.com/Masterminds/sprig/v3"
 	"github.com/den-is/ktempl/pkg/kubernetes"
 	"github.com/den-is/ktempl/pkg/logging"
 	"github.com/den-is/ktempl/pkg/validation"
@@ -25,7 +26,7 @@ func RenderOutput(tpl_path string, nodedata *TemplData, output_dst string) error
 
 	// prepare template and rendered data
 	tpl_name := path.Base(tpl_path)
-	t, templ_init_err := template.New(tpl_name).Option("missingkey=error").ParseFiles(tpl_path)
+	t, templ_init_err := template.New(tpl_name).Funcs(sprig.TxtFuncMap()).Option("missingkey=error").ParseFiles(tpl_path)
 	if templ_init_err != nil {
 		logging.LogWithFields(
 			logging.Fields{

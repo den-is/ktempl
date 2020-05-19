@@ -29,9 +29,11 @@ Default kubeconfig location `~/.kube/config`
 
 More details on how to obtain that file can be found [here][kubeconfigdoc].
 
-## Template scope variables
+## Template language and scope variables
 
-Two variables passed to template for rendering:
+Templates are formated using [Go template language][gotemplate] and support [Sprig template library][sprig].
+
+Two main variables are passed to template for rendering:
 
 - `.Nodes` - list of nodes returned by Kubernetes
 - `.Values` - dictionary of key=values passed to ktempl using `--set` or `values:` in config file.
@@ -94,6 +96,7 @@ Or whatever you supply with `-c` command-line option.
 | `timeout`             | `N/A`              | _NOT YET IMPLEMENTED_ ktempl operations timeout                          |
 
 [gotemplate]: https://golang.org/pkg/text/template/
+[sprig]: http://masterminds.github.io/sprig/
 [consultemplate]: https://github.com/hashicorp/consul-template
 [helm]: https://helm.sh/
 [ansibletemplate]: https://docs.ansible.com/ansible/latest/modules/template_module.html
