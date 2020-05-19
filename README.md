@@ -1,6 +1,6 @@
 # ktempl - the missing link between Kubernetes and mastodons
 
-:warning: **Very early stage of development! Use with caution! No warranties provided.** :construction:
+:warning: **Early stage of development! Use with caution! No warranties provided.** :construction:
 
 ktempl renders files formatted using Go [template][gotemplate] with data returned from a Kubernetes cluster.
 
