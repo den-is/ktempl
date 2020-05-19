@@ -1,0 +1,32 @@
+run:
+  timeout: 1m
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters:
+  disable-all: true
+  enable:
+    - deadcode
+    - dupl
+    - gofmt
+    - gosimple
+    - govet
+    - ineffassign
+    - nakedret
+    - structcheck
+    - unused
+    - varcheck
+    - staticcheck
+    - errcheck
+    - typecheck
+    # - goimports
+    # - golint
+
+linters-settings:
+  gofmt:
+    simplify: true
+  dupl:
+    threshold: 200

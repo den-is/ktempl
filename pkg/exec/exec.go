@@ -11,10 +11,10 @@ import (
 
 func ExecCommand(command string) {
 
-	cmd_s := strings.Fields(command)
+	cmdSlice := strings.Fields(command)
 
 	// TODO: central validation
-	_, path_err := exec.LookPath(cmd_s[0])
+	_, path_err := exec.LookPath(cmdSlice[0])
 	if path_err != nil {
 		logging.LogWithFields(
 			logging.Fields{
@@ -23,7 +23,7 @@ func ExecCommand(command string) {
 		os.Exit(1)
 	}
 
-	cmd := exec.Command(cmd_s[0], cmd_s[1:]...)
+	cmd := exec.Command(cmdSlice[0], cmdSlice[1:]...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

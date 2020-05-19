@@ -22,11 +22,11 @@ type TemplData struct {
 }
 
 // Receives path to a template, Node data and writes rendered file to output destination path
-func RenderOutput(tpl_path string, nodedata *TemplData, output_dst string) error {
+func RenderOutput(templPath string, nodedata *TemplData, output_dst string) error {
 
 	// prepare template and rendered data
-	tpl_name := path.Base(tpl_path)
-	t, templ_init_err := template.New(tpl_name).Funcs(sprig.TxtFuncMap()).Option("missingkey=error").ParseFiles(tpl_path)
+	templName := path.Base(templPath)
+	t, templ_init_err := template.New(templName).Funcs(sprig.TxtFuncMap()).Option("missingkey=error").ParseFiles(templPath)
 	if templ_init_err != nil {
 		logging.LogWithFields(
 			logging.Fields{
@@ -74,22 +74,22 @@ func RenderOutput(tpl_path string, nodedata *TemplData, output_dst string) error
 					}, "error", "Was not able to write new file:", output_dst, err)
 				return write_err
 
-			} else {
-				fmt.Println("Successfully wrote contents in", output_dst)
-				logging.LogWithFields(
-					logging.Fields{
-						"component": "render",
-					}, "info", "Succesfully wrote file ", output_dst)
-				return nil
-
 			}
-		} else {
+
+			fmt.Println("Successfully wrote contents in", output_dst)
 			logging.LogWithFields(
 				logging.Fields{
 					"component": "render",
-				}, "error", "Was not able to create output file", output_dst)
-			return err
+				}, "info", "Succesfully wrote file ", output_dst)
+			return nil
+
 		}
+
+		logging.LogWithFields(
+			logging.Fields{
+				"component": "render",
+			}, "error", "Was not able to create output file", output_dst)
+		return err
 
 	} else if output_dst != "" {
 		// if file exists and not stdout -> compare contents and [over]write
@@ -116,14 +116,14 @@ func RenderOutput(tpl_path string, nodedata *TemplData, output_dst string) error
 					}, "error", "Was not able to write to existing output file", output_dst, write_err)
 				return write_err
 
-			} else {
-				// log success if write to existing file succeeds
-				logging.LogWithFields(
-					logging.Fields{
-						"component": "render",
-					}, "info", "Successfully updated file", output_dst)
-				return nil
 			}
+			// log success if write to existing file succeeds
+			logging.LogWithFields(
+				logging.Fields{
+					"component": "render",
+				}, "info", "Successfully updated file", output_dst)
+			return nil
+
 		} else {
 			fmt.Println("Contents did not change")
 			logging.LogWithFields(
