@@ -44,10 +44,10 @@ release:
   draft: true
   prerelease: false
 changelog:
-  sort: asc
   filters:
     exclude:
     - "^docs:"
     - "^test:"
     - "^readme|README"
     - "^roadmap|ROADMAP"
+    - "^gorelease"
