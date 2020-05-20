@@ -3,6 +3,7 @@ before:
   - go mod download
   - go generate ./...
 release:
+  draft: true
   prerelease: false
 builds:
 - env:
