@@ -48,7 +48,7 @@ Each node in `.Nodes` has next fields
 
 ## Install
 
-Download from the [releases][releases] page. Example setup on linux machine:
+Download from the [releases][releasespage] page. Example setup on linux machine:
 ```sh
 curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_Linux_x86_64.tar.gz \
 && tar xzf ktempl_0.0.1_Linux_x86_64.tar.gz\
@@ -111,4 +111,4 @@ Or whatever you supply with `-c` command-line option.
 [puppettemplate]: https://puppet.com/docs/puppet/latest/lang_template.html
 [kubeconfigdoc]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [labelselectors]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[releases][https://github.com/den-is/ktempl/releases]
+[releasespage]: https://github.com/den-is/ktempl/releases
