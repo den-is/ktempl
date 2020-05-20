@@ -60,7 +60,7 @@ Each node in `.Nodes` has next fields
 - `.mynode.Annotations`
 - `.mynode.Labels`
 
-### Example usage
+## Example usage
 
 More examples in examples [directory](/examples/)
 
@@ -75,14 +75,14 @@ ktempl -p -l app=myapp1 -t myexamle.tpl
 ktempl -l app=stagingapps -t example.tpl -o output.conf --set port=32456 --exec="touch success_exec.txt"
 ```
 
-### Config file
+## Config file
 
 Optionally you can supply ktempl with a config file.
 The default is `config.yaml` in the same directory as binary.
 Or `/etc/ktempl/config.yaml`.
 Or whatever you supply with `-c` command-line option.
 
-### List of available configuration options
+## List of available configuration options
 
 | Config file settings  | CLI flags          | Description                                                              |
 | ----------------------| -------------------| ------------------------------------------------------------------------ |
