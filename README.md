@@ -8,7 +8,7 @@ Primary data for ktempl is a **list of nodes** returned by a query to Kubernetes
 By default, ktempl directly queries Kubernetes for nodes objects.
 Or you can tell ktempl to get nodes by querying specific pods, using command line flag `-p`.
 
-Secondary data is key=value data provided by user using `--set` arguments.
+Secondary data is a `key=value` data provided by user using `--set` arguments.
 
 Optionally, after successful render, ktemp might execute command provided by user.
 
@@ -48,6 +48,14 @@ Each node in `.Nodes` has next fields
 
 ## Install
 
+Download from the [releases][releases] page. Example setup on linux machine:
+```sh
+curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_Linux_x86_64.tar.gz \
+&& tar xzf ktempl_0.0.1_Linux_x86_64.tar.gz\
+&& cp ktempl_0.0.1_Linux_x86_64/ktempl /usr/local/bin
+```
+
+Compile by yourself
 ```sh
 go get -u github.com/den-is/ktempl
 ```
@@ -103,3 +111,4 @@ Or whatever you supply with `-c` command-line option.
 [puppettemplate]: https://puppet.com/docs/puppet/latest/lang_template.html
 [kubeconfigdoc]: https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 [labelselectors]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+[releases][https://github.com/den-is/ktempl/releases]

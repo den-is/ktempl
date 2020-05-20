@@ -2,9 +2,6 @@ before:
   hooks:
   - go mod download
   - go generate ./...
-release:
-  draft: true
-  prerelease: false
 builds:
 - env:
   - CGO_ENABLED=0
@@ -26,7 +23,7 @@ builds:
   - -s -w -X github.com/den-is/ktempl/cmd.version={{.Version}} -X github.com/den-is/ktempl/cmd.commit={{.Commit}} -X github.com/den-is/ktempl/cmd.date={{.Date}}
 archives:
 - name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-  wrap_in_directory: true
+  wrap_in_directory: "{{ .ProjectName }}"
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -34,6 +31,7 @@ archives:
   replacements:
     darwin: Darwin
     linux: Linux
+    windows: Windows
     amd64: x86_64
   files:
   - LICENSE
@@ -42,9 +40,14 @@ checksum:
   name_template: checksums.txt
 snapshot:
   name_template: "{{ .Tag }}-snapshot-{{ .ShortCommit }}"
+release:
+  draft: true
+  prerelease: false
 changelog:
   sort: asc
   filters:
     exclude:
-    - '^docs:'
-    - '^test:'
+    - "^docs:"
+    - "^test:"
+    - "^readme|README"
+    - "^roadmap|ROADMAP"
