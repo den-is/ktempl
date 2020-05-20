@@ -51,9 +51,13 @@ func Init() {
 	viper.AddConfigPath("/etc/ktempl")
 
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("No config file provided")
+		logging.LogWithFields(logging.Fields{
+			"component": "config",
+		}, "warn", "No config file provided")
 	} else {
-		fmt.Println("Using config file:", cfgFile)
+		logging.LogWithFields(logging.Fields{
+			"component": "config",
+		}, "info", "Loading config file: ", cfgFile)
 	}
 
 	if err := viper.Unmarshal(&CurrentConfig); err != nil {
