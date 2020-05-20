@@ -2,6 +2,7 @@ package logging
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"time"
 
@@ -20,11 +21,18 @@ var logger = logrus.New()
 func LoggerSetup(config *LoggingConfig) {
 
 	if config.File != "" {
+		if config.File == "stdout" {
+			logger.SetOutput(os.Stdout)
+		} else if config.File == "stderr" {
+			logger.SetOutput(os.Stderr)
+		}
 		f, errOpen := os.OpenFile(config.File, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 		if errOpen != nil {
 			fmt.Println("was not able to open log file", config.File)
 		}
 		logger.SetOutput(f)
+	} else if config.File == "" || config.File == "disabled" {
+		logger.SetOutput(ioutil.Discard)
 	}
 
 	level, errLevel := logrus.ParseLevel(config.Level)
