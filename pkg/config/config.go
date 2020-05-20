@@ -50,15 +50,7 @@ func Init() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("/etc/ktempl")
 
-	if err := viper.ReadInConfig(); err != nil {
-		logging.LogWithFields(logging.Fields{
-			"component": "config",
-		}, "warn", "No config file provided")
-	} else {
-		logging.LogWithFields(logging.Fields{
-			"component": "config",
-		}, "info", "Loading config file: ", cfgFile)
-	}
+	_ = viper.ReadInConfig()
 
 	if err := viper.Unmarshal(&CurrentConfig); err != nil {
 		fmt.Printf("Unable to decode into struct, %v", err)
