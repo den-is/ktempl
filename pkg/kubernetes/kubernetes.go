@@ -65,7 +65,6 @@ func GetHostList(conn *kubernetes.Clientset, namespace *string, selector *string
 		pods := QueryPods(conn, namespace, selector)
 		pods_nodes := GetPodsNodes(conn, pods)
 
-		fmt.Printf("Got %d pods, running on %d nodes\n", len(pods.Items), len(*pods_nodes))
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "kubernetes",
@@ -85,7 +84,6 @@ func GetHostList(conn *kubernetes.Clientset, namespace *string, selector *string
 
 		nodes := QueryNodes(conn, selector)
 
-		fmt.Printf("Got %d nodes\n", len(nodes.Items))
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "kubernetes",
