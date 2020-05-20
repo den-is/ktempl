@@ -29,6 +29,20 @@ Default kubeconfig location `~/.kube/config`
 
 More details on how to obtain that file can be found [here][kubeconfigdoc].
 
+## Install
+
+Download from the [releases][releasespage] page. Example setup on linux machine:
+```sh
+curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_Linux_x86_64.tar.gz \
+&& tar xzf ktempl_0.0.1_Linux_x86_64.tar.gz\
+&& cp ktempl_0.0.1_Linux_x86_64/ktempl /usr/local/bin
+```
+
+Compile by yourself
+```sh
+go get -u github.com/den-is/ktempl
+```
+
 ## Template language and scope variables
 
 Templates are formated using [Go template language][gotemplate] and support [Sprig template library][sprig].
@@ -45,20 +59,6 @@ Each node in `.Nodes` has next fields
 - `.mynode.Cluster`
 - `.mynode.Annotations`
 - `.mynode.Labels`
-
-## Install
-
-Download from the [releases][releasespage] page. Example setup on linux machine:
-```sh
-curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_Linux_x86_64.tar.gz \
-&& tar xzf ktempl_0.0.1_Linux_x86_64.tar.gz\
-&& cp ktempl_0.0.1_Linux_x86_64/ktempl /usr/local/bin
-```
-
-Compile by yourself
-```sh
-go get -u github.com/den-is/ktempl
-```
 
 ### Example usage
 
