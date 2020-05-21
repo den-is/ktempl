@@ -39,7 +39,7 @@ curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_L
 && cp ktempl_0.0.1_Linux_x86_64/ktempl /usr/local/bin
 ```
 
-Compile by yourself
+Compile it yourself. Minimum recommended version is Go 1.14.
 
 ```sh
 go get -u github.com/den-is/ktempl
@@ -104,6 +104,10 @@ Or whatever you supply with `-c` command-line option.
 | `interval`            | `-i, --interval`   | Interval between polls. default 15s. Valid time units are "s", "m", "h". |
 | `retries`             | `N/A`              | _NOT YET IMPLEMENTED_ Number of retries to fetch data from Kubernetes    |
 | `timeout`             | `N/A`              | _NOT YET IMPLEMENTED_ ktempl operations timeout                          |
+
+### Contact
+
+Denis Iskandarov denis@cloudboom.io
 
 [gotemplate]: https://golang.org/pkg/text/template/
 [sprig]: http://masterminds.github.io/sprig/
