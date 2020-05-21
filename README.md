@@ -32,6 +32,7 @@ More details on how to obtain that file can be found [here][kubeconfigdoc].
 ## Install
 
 Download from the [releases][releasespage] page. Example setup on linux machine:
+
 ```sh
 curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_Linux_x86_64.tar.gz \
 && tar xzf ktempl_0.0.1_Linux_x86_64.tar.gz\
@@ -39,6 +40,7 @@ curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_L
 ```
 
 Compile by yourself
+
 ```sh
 go get -u github.com/den-is/ktempl
 ```

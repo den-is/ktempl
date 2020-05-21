@@ -22,65 +22,65 @@ type TemplData struct {
 }
 
 // Receives path to a template, Node data and writes rendered file to output destination path
-func RenderOutput(templPath string, nodedata *TemplData, output_dst string) error {
+func RenderOutput(templPath string, nodedata *TemplData, outputDst string) error {
 
 	// prepare template and rendered data
 	templName := path.Base(templPath)
-	t, templ_init_err := template.New(templName).Funcs(sprig.TxtFuncMap()).Option("missingkey=error").ParseFiles(templPath)
-	if templ_init_err != nil {
+	t, templInitErr := template.New(templName).Funcs(sprig.TxtFuncMap()).Option("missingkey=error").ParseFiles(templPath)
+	if templInitErr != nil {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "render",
-			}, "error", templ_init_err)
+			}, "error", templInitErr)
 	}
-	rendered_tpl_bf := new(bytes.Buffer)
-	if templ_exec_err := t.Execute(rendered_tpl_bf, *nodedata); templ_exec_err != nil {
+	templRenderedBuf := new(bytes.Buffer)
+	if templExecErr := t.Execute(templRenderedBuf, *nodedata); templExecErr != nil {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "render",
-			}, "error", templ_exec_err)
-		return templ_exec_err
+			}, "error", templExecErr)
+		return templExecErr
 	}
 
-	f_perms_val := viper.GetUint32("permissions")
+	outputFilePermsVal := viper.GetUint32("permissions")
 
-	if output_dst == "" {
+	if outputDst == "" {
 		// write to stdout if output file path not provided
-		fmt.Fprint(os.Stdout, rendered_tpl_bf.String())
+		fmt.Fprint(os.Stdout, templRenderedBuf.String())
 		return nil
 
-	} else if err := validation.CheckFileExists(output_dst); err != nil && output_dst != "" {
+	} else if err := validation.CheckFileExists(outputDst); err != nil && outputDst != "" {
 		// if file not exists and not stdout -> create file
 
-		out_f, err := os.Create(output_dst)
+		outpufFile, err := os.Create(outputDst)
 		if err == nil {
 
 			// change permissions of a new file
-			if err := out_f.Chmod(os.FileMode(f_perms_val)); err != nil {
+			if err := outpufFile.Chmod(os.FileMode(outputFilePermsVal)); err != nil {
 				logging.LogWithFields(
 					logging.Fields{
 						"component": "render",
-					}, "error", "Failed setting permissions on a new file:", out_f, err)
+					}, "error", "Failed setting permissions on a new file:", outpufFile, err)
 			}
 
 			// make sure to close file after writing it
-			defer out_f.Close()
+			defer outpufFile.Close()
 
-			write_err := ioutil.WriteFile(output_dst, rendered_tpl_bf.Bytes(), os.FileMode(f_perms_val))
-			if write_err != nil {
+			writeErr := ioutil.WriteFile(outputDst, templRenderedBuf.Bytes(), os.FileMode(outputFilePermsVal))
+			if writeErr != nil {
 				logging.LogWithFields(
 					logging.Fields{
 						"component": "render",
-					}, "error", "Was not able to write new file:", output_dst, err)
-				return write_err
+					}, "error", "Was not able to write new file:", outputDst, err)
+				return writeErr
 
 			}
 
-			fmt.Println("Successfully wrote contents in", output_dst)
+			fmt.Println("Successfully wrote contents in", outputDst)
 			logging.LogWithFields(
 				logging.Fields{
 					"component": "render",
-				}, "info", "Succesfully wrote file ", output_dst)
+				}, "info", "Succesfully wrote file ", outputDst)
 			return nil
 
 		}
@@ -88,40 +88,40 @@ func RenderOutput(templPath string, nodedata *TemplData, output_dst string) erro
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "render",
-			}, "error", "Was not able to create output file", output_dst)
+			}, "error", "Was not able to create output file", outputDst)
 		return err
 
-	} else if output_dst != "" {
+	} else if outputDst != "" {
 		// if file exists and not stdout -> compare contents and [over]write
 
 		// open file
-		dst_bs, err := ioutil.ReadFile(output_dst)
+		existingFileBS, err := ioutil.ReadFile(outputDst)
 		if err != nil {
-			fmt.Println("Unable to read file at destination ", output_dst, err)
+			fmt.Println("Unable to read file at destination ", outputDst, err)
 			logging.LogWithFields(
 				logging.Fields{
 					"component": "render",
-				}, "error", "Unable to read file at destination ", output_dst, err)
+				}, "error", "Unable to read file at destination ", outputDst, err)
 			return err
 
 			// compare data at destination with rendered
-		} else if string(dst_bs) != rendered_tpl_bf.String() {
+		} else if string(existingFileBS) != templRenderedBuf.String() {
 			// if datas differ. write rendered data into destination
-			write_err := ioutil.WriteFile(output_dst, rendered_tpl_bf.Bytes(), os.FileMode(f_perms_val))
-			if write_err != nil {
+			writeErr := ioutil.WriteFile(outputDst, templRenderedBuf.Bytes(), os.FileMode(outputFilePermsVal))
+			if writeErr != nil {
 				// log error if write to existing file fails
 				logging.LogWithFields(
 					logging.Fields{
 						"component": "render",
-					}, "error", "Was not able to write to existing output file", output_dst, write_err)
-				return write_err
+					}, "error", "Was not able to write to existing output file", outputDst, writeErr)
+				return writeErr
 
 			}
 			// log success if write to existing file succeeds
 			logging.LogWithFields(
 				logging.Fields{
 					"component": "render",
-				}, "info", "Successfully updated file", output_dst)
+				}, "info", "Successfully updated file", outputDst)
 			return nil
 
 		} else {

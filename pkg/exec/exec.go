@@ -14,12 +14,12 @@ func ExecCommand(command string) {
 	cmdSlice := strings.Fields(command)
 
 	// TODO: central validation
-	_, path_err := exec.LookPath(cmdSlice[0])
-	if path_err != nil {
+	_, pathErr := exec.LookPath(cmdSlice[0])
+	if pathErr != nil {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "exec",
-			}, "error", fmt.Sprintf("Was not able to find %q in $PATH. ", command), path_err)
+			}, "error", fmt.Sprintf("Was not able to find %q in $PATH. ", command), pathErr)
 		os.Exit(1)
 	}
 

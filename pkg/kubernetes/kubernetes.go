@@ -27,14 +27,14 @@ func Connect(kubeconfig *string) (*kubernetes.Clientset, error) {
 
 	// var kubeconfig *string
 	// TODO: add logic to normalize path especially if using ~
-	var this_kubeconfig string
+	var thisKubeconfig string
 	if *kubeconfig == "" {
-		this_kubeconfig = filepath.Join(os.Getenv("HOME"), ".kube", "config")
+		thisKubeconfig = filepath.Join(os.Getenv("HOME"), ".kube", "config")
 	} else {
-		this_kubeconfig = *kubeconfig
+		thisKubeconfig = *kubeconfig
 	}
 
-	config, err := clientcmd.BuildConfigFromFlags("", this_kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags("", thisKubeconfig)
 	if err != nil {
 		logging.LogWithFields(
 			logging.Fields{
@@ -56,27 +56,27 @@ func Connect(kubeconfig *string) (*kubernetes.Clientset, error) {
 }
 
 // Returns Final list of nodes corresponding user query
-func GetHostList(conn *kubernetes.Clientset, namespace *string, selector *string, use_pods *bool) *[]Node {
+func GetHostList(conn *kubernetes.Clientset, namespace *string, selector *string, usePods *bool) *[]Node {
 
 	result := []Node{}
 
-	if *use_pods {
+	if *usePods {
 
 		pods := QueryPods(conn, namespace, selector)
-		pods_nodes := GetPodsNodes(conn, pods)
+		nodesFromPods := GetPodsNodes(conn, pods)
 
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "kubernetes",
-			}, "info", fmt.Sprintf("Got %d pods, running on %d nodes", len(pods.Items), len(*pods_nodes)))
+			}, "info", fmt.Sprintf("Got %d pods, running on %d nodes", len(pods.Items), len(*nodesFromPods)))
 
-		for _, pod_node := range *pods_nodes {
+		for _, podNode := range *nodesFromPods {
 			n := Node{}
-			n.Name = pod_node.Name
-			n.InternalIP = GetNodeInternalIP(pod_node)
-			n.Labels = pod_node.Labels
-			n.Annotations = pod_node.Annotations
-			n.Cluster = pod_node.ClusterName
+			n.Name = podNode.Name
+			n.InternalIP = GetNodeInternalIP(podNode)
+			n.Labels = podNode.Labels
+			n.Annotations = podNode.Annotations
+			n.Cluster = podNode.ClusterName
 			result = append(result, n)
 		}
 
@@ -110,13 +110,13 @@ func GetHostList(conn *kubernetes.Clientset, namespace *string, selector *string
 // Query Pods in given Namespace using provided LabelSelector if any
 func QueryPods(clientset *kubernetes.Clientset, namespace *string, labels *string) *v1.PodList {
 
-	list_filter := metav1.ListOptions{}
+	listFilter := metav1.ListOptions{}
 
 	if *labels != "" {
-		list_filter.LabelSelector = *labels
+		listFilter.LabelSelector = *labels
 	}
 
-	pods, err := clientset.CoreV1().Pods(*namespace).List(context.TODO(), list_filter)
+	pods, err := clientset.CoreV1().Pods(*namespace).List(context.TODO(), listFilter)
 	if err != nil {
 		logging.LogWithFields(
 			logging.Fields{
@@ -132,7 +132,7 @@ func QueryPods(clientset *kubernetes.Clientset, namespace *string, labels *strin
 // Returns slice of unique nodes on which Pods are running
 func GetPodsNodes(clientset *kubernetes.Clientset, pods *v1.PodList) *[]*v1.Node {
 
-	existing_nodes := make(map[string]bool)
+	existingNodes := make(map[string]bool)
 	var nodeItems []*v1.Node
 
 	for _, pod := range pods.Items {
@@ -144,8 +144,8 @@ func GetPodsNodes(clientset *kubernetes.Clientset, pods *v1.PodList) *[]*v1.Node
 					"component": "kubernetes",
 				}, "error", fmt.Sprintf("Was not able to get node for the pod %q. ", pod.Name), err)
 		}
-		if _, exists := existing_nodes[node.Name]; !exists {
-			existing_nodes[node.Name] = true
+		if _, exists := existingNodes[node.Name]; !exists {
+			existingNodes[node.Name] = true
 			nodeItems = append(nodeItems, node)
 		} else {
 			continue
@@ -158,13 +158,13 @@ func GetPodsNodes(clientset *kubernetes.Clientset, pods *v1.PodList) *[]*v1.Node
 // Query for Nodes using given LabelSelector if any
 func QueryNodes(clientset *kubernetes.Clientset, labels *string) *v1.NodeList {
 
-	list_filter := metav1.ListOptions{}
+	listFilter := metav1.ListOptions{}
 
 	if *labels != "" {
-		list_filter.LabelSelector = *labels
+		listFilter.LabelSelector = *labels
 	}
 
-	nodes, err := clientset.CoreV1().Nodes().List(context.TODO(), list_filter)
+	nodes, err := clientset.CoreV1().Nodes().List(context.TODO(), listFilter)
 	if err != nil {
 		logging.LogWithFields(
 			logging.Fields{

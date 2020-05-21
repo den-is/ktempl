@@ -22,8 +22,8 @@ linters:
     - staticcheck
     - errcheck
     - typecheck
+    - golint
     # - goimports
-    # - golint
 
 linters-settings:
   gofmt:
