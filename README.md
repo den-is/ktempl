@@ -98,7 +98,7 @@ Or whatever you supply with `-c` command-line option.
 | `set`                 | `--set`            | Additional key=values passed to template rendering engine                |
 | `exec`                | `-e, --exec`       | Command to execute after successful template render                      |
 | `log.file`            | `--log-file`       | Path to log file. Allowed values `disabled`, `stdout`, `stderr`, `path_to_log_file_dst`. Default `disabled`. |
-| `log.level`           | `--log-file`       | Minimum log message level to log. Default `info`. Available levels by hierarchy: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic` |
+| `log.level`           | `--log-level`      | Minimum log message level to log. Default `info`. Available levels by hierarchy: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic` |
 | `N/A`                 | `-c, --config`     | Path to ktempl config file                                               |
 | `daemon`              | `-d, --daemon`     | Run ktempl in service mode, rather than singleshot                       |
 | `interval`            | `-i, --interval`   | Interval between polls. default 15s. Valid time units are "s", "m", "h". |
