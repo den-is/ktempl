@@ -13,7 +13,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Initializes job, listens for signals
+// Entrypoint for the whole process. Initializes job, listens for signals
 func Gates(cmd *cobra.Command, args []string) {
 
 	// TODO: add central place for validation logic

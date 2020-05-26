@@ -22,7 +22,7 @@ type TemplData struct {
 }
 
 // Receives path to a template, Node data and writes rendered file to output destination path
-func RenderOutput(templPath string, nodedata *TemplData, outputDst string) error {
+func ProduceOutput(templPath string, inputData *TemplData, outputDst string) error {
 
 	// prepare template and rendered data
 	templName := path.Base(templPath)
@@ -34,7 +34,7 @@ func RenderOutput(templPath string, nodedata *TemplData, outputDst string) error
 			}, "error", templInitErr)
 	}
 	templRenderedBuf := new(bytes.Buffer)
-	if templExecErr := t.Execute(templRenderedBuf, *nodedata); templExecErr != nil {
+	if templExecErr := t.Execute(templRenderedBuf, *inputData); templExecErr != nil {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "render",

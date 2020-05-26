@@ -20,12 +20,12 @@ func Worker() {
 	output := viper.GetString("output")
 	usePods := viper.GetBool("pods")
 
-	templateData := render.TemplData{}
 	template := viper.GetString("template")
 
-	// TODO: accept complex values for the right side of the key=value expression, rather than just string values
-	userData := viper.GetStringMapString("values")
-	templateData.Values = &userData
+	templateData := render.TemplData{}
+
+	userProvidedValues := viper.GetStringMapString("values")
+	templateData.Values = &userProvidedValues
 
 	for {
 
@@ -42,7 +42,7 @@ func Worker() {
 
 		templateData.Nodes = nodes
 
-		if err := render.RenderOutput(template, &templateData, output); err == nil {
+		if err := render.ProduceOutput(template, &templateData, output); err == nil {
 			if viper.GetString("exec") != "" {
 				fmt.Println("Going to execute provided command")
 				exec.ExecCommand(viper.GetString("exec"))
