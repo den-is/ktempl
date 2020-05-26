@@ -18,7 +18,7 @@ import (
 
 type TemplData struct {
 	Nodes  *[]kubernetes.Node
-	Values *map[string]string
+	Values *map[string]interface{}
 }
 
 // Receives path to a template, Node data and writes rendered file to output destination path

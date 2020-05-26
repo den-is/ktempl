@@ -20,7 +20,7 @@ type Config struct {
 	Permissions uint32
 	Interval    time.Duration
 	Exec        string
-	Values      map[string]string
+	Values      map[string]interface{}
 	Daemon      bool
 	Pods        bool
 	Log         logging.LoggingConfig

@@ -24,7 +24,7 @@ func Worker() {
 
 	templateData := render.TemplData{}
 
-	userProvidedValues := viper.GetStringMapString("values")
+	userProvidedValues := viper.GetStringMap("values")
 	templateData.Values = &userProvidedValues
 
 	for {
