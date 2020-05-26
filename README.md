@@ -34,9 +34,9 @@ More details on how to obtain that file can be found [here][kubeconfigdoc].
 Download from the [releases][releasespage] page. Example setup on linux machine:
 
 ```sh
-curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_`uname -s`_x86_64.tar.gz \
-&& tar xzf ktempl_0.0.1_`uname -s`_x86_64.tar.gz \
-&& cp ktempl_0.0.1_`uname -s`_x86_64/ktempl /usr/local/bin
+curl -OL https://github.com/den-is/ktempl/releases/download/0.0.1/ktempl_0.0.1_`uname -s`_x86_64.tar.gz &&\
+tar xzvf ktempl_0.0.1_`uname -s`_x86_64.tar.gz &&\
+cp ktempl_0.0.1_`uname -s`_x86_64/ktempl /usr/local/bin
 ```
 
 Compile it yourself. Minimum recommended Go version is 1.14.
@@ -52,7 +52,7 @@ Templates are formated using [Go template language][gotemplate] and support [Spr
 Two main variables are passed to template for rendering:
 
 - `.Nodes` - list of nodes returned by Kubernetes
-- `.Values` - dictionary of key=values passed to ktempl using `--set` or `values:` in config file.
+- `.Values` - dictionary of key=values passed to ktempl using `--set` in the terminal or `values:` in the config file.
 
 Each node in `.Nodes` has next fields
 
