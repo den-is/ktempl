@@ -17,12 +17,21 @@ import (
 func Gates(cmd *cobra.Command, args []string) {
 
 	// TODO: add central place for validation logic
+	if viper.GetString("template") == "" {
+		logging.LogWithFields(
+			logging.Fields{
+				"component": "starter",
+			}, "error", "No path to template file provided. Provide it using config file 'template' or via command '-t' argument")
+		os.Exit(1)
+	}
+
+	// TODO: add central place for validation logic
 	// Check if template file exists
 	if err := validation.CheckFileExists(viper.GetString("template")); err != nil {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "starter",
-			}, "error", "Template file at given path does not exist.", err)
+			}, "error", fmt.Sprintf("Ktempl can't access path at given path '%s'. Check if file exists and ktempl is allowed to access it."), err)
 		os.Exit(1)
 	}
 

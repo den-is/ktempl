@@ -66,8 +66,6 @@ func init() {
 	rootCmd.Flags().BoolP("pods", "p", false, "query pods for their nodes")
 	rootCmd.Flags().BoolP("daemon", "d", false, "run as daemon")
 
-	_ = rootCmd.MarkFlagRequired("template")
-
 	_ = viper.BindPFlag("kubeconfig", rootCmd.Flags().Lookup("kubeconfig"))
 	_ = viper.BindPFlag("namespace", rootCmd.Flags().Lookup("namespace"))
 	_ = viper.BindPFlag("selector", rootCmd.Flags().Lookup("selector"))
