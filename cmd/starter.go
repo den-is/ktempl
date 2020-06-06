@@ -31,7 +31,7 @@ func Gates(cmd *cobra.Command, args []string) {
 		logging.LogWithFields(
 			logging.Fields{
 				"component": "starter",
-			}, "error", fmt.Sprintf("Ktempl can't access path at given path '%s'. Check if file exists and ktempl is allowed to access it."), err)
+			}, "error", fmt.Sprintf("Ktempl can't access path at given path '%s'. Check if file exists and ktempl is allowed to access it.", viper.GetString("template")), err)
 		os.Exit(1)
 	}
 
