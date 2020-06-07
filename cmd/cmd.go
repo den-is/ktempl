@@ -54,7 +54,7 @@ func init() {
 
 	rootCmd.Flags().StringP("kubeconfig", "k", "", "path to kubeconfig (default is \"~/.kube/config\")")
 	rootCmd.Flags().StringP("namespace", "n", "", "used with -p. kubernetes namespace indicator (default is \"\" or what is provided in kubeconfig. usually \"default\")")
-	rootCmd.Flags().StringP("selector", "l", "", "kubernetes label selectors (default is \"\" a.k.a everything)")
+	rootCmd.Flags().StringToStringP("selector", "l", nil, "kubernetes label selectors (default is \"\" a.k.a everything)")
 	rootCmd.Flags().StringP("template", "t", "", "input template file. Required")
 	rootCmd.Flags().StringP("output", "o", "", "output file path (default stdout)")
 	rootCmd.Flags().DurationP("interval", "i", defaultDuration, "used with -d. interval between polls (default 15s)")

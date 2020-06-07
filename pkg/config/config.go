@@ -11,10 +11,9 @@ import (
 
 type Config struct {
 	Kubeconfig  string
-	Timeout     string
-	Retries     int
-	Selector    string
 	Namespace   string
+	Selector    map[string]string
+	Pods        bool
 	Template    string
 	Output      string
 	Permissions uint32
@@ -22,7 +21,8 @@ type Config struct {
 	Exec        string
 	Values      map[string]interface{}
 	Daemon      bool
-	Pods        bool
+	Timeout     string
+	Retries     int
 	Log         logging.LoggingConfig
 }
 

@@ -6,13 +6,18 @@
 interval: 30s
 permissions: 0640
 
+template: examples/example.tpl
+
+selector:
+  app: coolweb
+  environment: production
+
 log:
   file: ktempl.log
 
 values:
   title: Example
   port: 32835
-
 ```
 
 ## Couple template examples

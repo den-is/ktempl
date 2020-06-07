@@ -16,7 +16,7 @@ func Worker() {
 
 	kubeconfig := viper.GetString("kubeconfig")
 	namespace := viper.GetString("namespace")
-	selector := viper.GetString("selector")
+	selector := render.StringifyStringsMap(viper.GetStringMapString("selector"))
 	output := viper.GetString("output")
 	usePods := viper.GetBool("pods")
 

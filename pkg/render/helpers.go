@@ -1,6 +1,7 @@
 package render
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -28,5 +29,20 @@ func StringSliceToStringMap(s []string) map[string]string {
 	}
 
 	return result
+
+}
+
+func StringifyStringsMap(m map[string]string) string {
+
+	if m == nil {
+		return ""
+	}
+
+	var s []string
+	for k, v := range m {
+		s = append(s, fmt.Sprintf("%s=%s", k, v))
+	}
+
+	return strings.Join(s, ",")
 
 }
