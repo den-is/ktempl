@@ -64,7 +64,7 @@ Each node in `.Nodes` has next fields
 
 Example template file
 
-```django
+```jinja
 # Welcome to {{ .Values.title  | lower | repeat 5 }} <<<<
 {{- range $i, $n := .Nodes }}
 Node {{$n.Name }} has {{ $n.InternalIP }} IP and port {{ $.Values.port }}
