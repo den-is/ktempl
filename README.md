@@ -62,9 +62,18 @@ Each node in `.Nodes` has next fields
 - `.mynode.Annotations`
 - `.mynode.Labels`
 
+Example template file
+
+```django
+# Welcome to {{ .Values.title  | lower | repeat 5 }} <<<<
+{{- range $i, $n := .Nodes }}
+Node {{$n.Name }} has {{ $n.InternalIP }} IP and port {{ $.Values.port }}
+{{- end }}
+```
+
 ## Example usage
 
-More examples in examples [directory](/examples/)
+More examples [here](/examples/)
 
 ```sh
 # query nodes with a specific label
