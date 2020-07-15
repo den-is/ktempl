@@ -46,7 +46,7 @@ func Gates(cmd *cobra.Command, args []string) {
 			logging.LogWithFields(
 				logging.Fields{
 					"component": "starter",
-				}, "info", fmt.Sprintf("Got %q signal: exiting", s))
+				}, "warn", fmt.Sprintf("Got %q signal: exiting", s))
 			os.Exit(0)
 		}
 	}
