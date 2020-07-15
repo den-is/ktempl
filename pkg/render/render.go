@@ -80,7 +80,7 @@ func ProduceOutput(templPath string, inputData *TemplData, outputDst string) err
 			logging.LogWithFields(
 				logging.Fields{
 					"component": "render",
-				}, "info", "Succesfully wrote file ", outputDst)
+				}, "warn", "Succesfully wrote file ", outputDst)
 			return nil
 
 		}
@@ -121,7 +121,7 @@ func ProduceOutput(templPath string, inputData *TemplData, outputDst string) err
 			logging.LogWithFields(
 				logging.Fields{
 					"component": "render",
-				}, "info", "Successfully updated file", outputDst)
+				}, "warn", "Successfully updated file", outputDst)
 			return nil
 
 		} else {
