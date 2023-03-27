@@ -17,7 +17,6 @@ import (
 type Node struct {
 	Name        string
 	InternalIP  string
-	Cluster     string
 	Annotations map[string]string
 	Labels      map[string]string
 }
@@ -76,7 +75,6 @@ func GetHostList(conn *kubernetes.Clientset, namespace *string, selector *string
 			n.InternalIP = GetNodeInternalIP(podNode)
 			n.Labels = podNode.Labels
 			n.Annotations = podNode.Annotations
-			n.Cluster = podNode.ClusterName
 			result = append(result, n)
 		}
 
@@ -96,7 +94,6 @@ func GetHostList(conn *kubernetes.Clientset, namespace *string, selector *string
 				n.InternalIP = GetNodeInternalIP(&node)
 				n.Labels = node.Labels
 				n.Annotations = node.Annotations
-				n.Cluster = node.ClusterName
 				result = append(result, n)
 			}
 		}
