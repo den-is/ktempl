@@ -1,12 +1,13 @@
-# ktempl - the missing link between Kubernetes and mastodons
+# ktempl - render Go templates with Nodes data from a Kubernetes
 
 :warning: **Early stage of development! Use with caution! No warranties provided.** :construction:
 
-ktempl renders files formatted using Go [template][gotemplate] with data returned from a Kubernetes cluster.
+ktempl renders template files formatted using Go [template][gotemplate] with data returned from a Kubernetes cluster.
 
-Primary data for ktempl is a **list of nodes** returned by a query to Kubernetes.
-By default, ktempl directly queries Kubernetes for nodes objects.
-Or you can tell ktempl to get nodes by querying specific pods, using command line flag `-p`.
+Primary data for ktempl is a **list of nodes** returned by a query to a Kubernetes.
+By default, ktempl fetches all nodes from the Kubernetes cluster.
+You can limit/filter nodes list using `-l` and available kubernetes key=value labels.
+Also you get list of nodes that host specific pods only by providing `-p` and `-l` to select specific pods.
 
 Secondary data is a `key=value` data provided by user using `--set` arguments.
 
@@ -39,7 +40,7 @@ tar xzvf ktempl_0.0.1_`uname -s`_x86_64.tar.gz &&\
 cp ktempl_0.0.1_`uname -s`_x86_64/ktempl /usr/local/bin
 ```
 
-Compile it yourself. Minimum recommended Go version is 1.14.
+Compile it yourself. Minimum recommended Go version is 1.17+.
 
 ```sh
 go get -u github.com/den-is/ktempl
@@ -58,7 +59,6 @@ Each node in `.Nodes` has next fields
 
 - `.mynode.Name`
 - `.mynode.InternalIP`
-- `.mynode.Cluster`
 - `.mynode.Annotations`
 - `.mynode.Labels`
 
@@ -95,24 +95,24 @@ Or whatever you supply with `-c` command-line option.
 
 ## List of available configuration options
 
-| Config file settings  | CLI flags          | Description                                                              |
-| ----------------------| -------------------| ------------------------------------------------------------------------ |
-| `kubeconfig`          | `-k, --kubeconfig` | Path to kubeconfig                                                       |
-| `pods`                | `-p, --pods`       | Query pods and get nodes they are running on                             |
-| `namespace`           | `-n, --namespace`  | Kubernetes namespace where to look Pods for. Used with `-p`              |
-| `selector`            | `-l, --selector`   | Kubernetes [label selectors][labelselectors] string                      |
-| `template`            | `-t, --template`   | Path to template                                                         |
-| `output`              | `-o, --output`     | Path where to put rendered results. default stdout                       |
-| `permissions`         | `N/A`              | Output file permissions. default 0644. should be in 4 digit format!      |
-| `set`                 | `--set`            | Additional key=values passed to template rendering engine                |
-| `exec`                | `-e, --exec`       | Command to execute after successful template render                      |
-| `log.file`            | `--log-file`       | Path to log file. Allowed values `disabled`, `stdout`, `stderr`, `path_to_log_file_dst`. Default `disabled`. |
-| `log.level`           | `--log-level`      | Minimum log message level to log. Default `info`. Available levels by hierarchy: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic` |
-| `N/A`                 | `-c, --config`     | Path to ktempl config file                                               |
-| `daemon`              | `-d, --daemon`     | Run ktempl in service mode, rather than singleshot                       |
-| `interval`            | `-i, --interval`   | Interval between polls. default 15s. Valid time units are "s", "m", "h". |
-| `retries`             | `N/A`              | _NOT YET IMPLEMENTED_ Number of retries to fetch data from Kubernetes    |
-| `timeout`             | `N/A`              | _NOT YET IMPLEMENTED_ ktempl operations timeout                          |
+| Config file settings  |      CLI flags      | Description                                                              |
+| ----------------------| --------------------| ------------------------------------------------------------------------ |
+| `kubeconfig`          | `-k, --kubeconfig`  | Path to kubeconfig                                                       |
+| `pods`                | `-p, --pods`        | Query pods and get nodes they are running on                             |
+| `namespace`           | `-n, --namespace`   | Kubernetes namespace where to look Pods for. Used with `-p`              |
+| `selector`            | `-l, --selector`    | Kubernetes [label selectors][labelselectors] string                      |
+| `template`            | `-t, --template`    | Path to template                                                         |
+| `output`              | `-o, --output`      | Path where to put rendered results. default stdout                       |
+| `permissions`         | `N/A`               | Output file permissions. default 0644. should be in 4 digit format!      |
+| `set`                 | `--set`             | Additional key=values passed to template rendering engine                |
+| `exec`                | `-e, --exec`        | Command to execute after successful template render                      |
+| `log.file`            | `--log-file`        | Path to log file. Allowed values `disabled`, `stdout`, `stderr`, `path_to_log_file_dst`. Default `disabled`. |
+| `log.level`           | `--log-level`       | Minimum log message level to log. Default `info`. Available levels by hierarchy: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic` |
+| `N/A`                 | `-c, --config`      | Path to ktempl config file                                               |
+| `daemon`              | `-d, --daemon`      | Run ktempl in service mode, rather than singleshot                       |
+| `interval`            | `-i, --interval`    | Interval between polls. default 15s. Valid time units are "s", "m", "h". |
+| `retries`             | `N/A`               | _NOT YET IMPLEMENTED_ Number of retries to fetch data from Kubernetes    |
+| `timeout`             | `N/A`               | _NOT YET IMPLEMENTED_ ktempl operations timeout                          |
 
 ### Contact
 
