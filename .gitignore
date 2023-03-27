@@ -1,5 +1,8 @@
 ktempl
 *.log
+*.bkp
 dist
 vendor
 
+
+dist/
